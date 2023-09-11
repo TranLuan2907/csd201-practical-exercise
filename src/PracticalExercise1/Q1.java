@@ -5,10 +5,6 @@
  */
 package PracticalExercise1;
 
-
-
-
-
 /**
  * This is some of my codes contributing to the subject CSD201 practice
  * exercises
@@ -36,21 +32,25 @@ public class Q1 {
     /**
      * Nested class are used in this case in order to increase the use of
      * encapsulation and creates more readable and maintainable code
-     *
      * This class is marked as static to allow access to its attribute
      * throughout the entire class, including methods that handle information.
      */
     public static class Node {
+        private Node head;
 
-        //This attributes are set private because it hides internal details of
-        //a class and only expose only the necessary information - Encapsulation.
+        //These attributes are set private because it hides internal details of
+        //a class and only expose the necessary information - Encapsulation.
         private int data;
         private Node next;
 
-        //Constructor to get parameteres which are passed through some methods.
+        //Constructor to get parameters which are passed through some methods.
         public Node(int data) {
             this.data = data;
             this.next = null;
+        }
+
+        public Node() {
+
         }
     }
 
@@ -94,9 +94,6 @@ public class Q1 {
     /**
      * Insert a new node after a given node Given a node p, insert a new node
      * after the given p node
-     *
-     * @param p
-     * @param x
      */
     public void addAfter(Node p, int x) {
         //Create a new node, allocate some data
@@ -205,7 +202,6 @@ public class Q1 {
     
     /**
      * Delete the first node whose info is equal to x
-     * @param x 
      */
     public void delete(int x) {
         //Check if the list is empty
@@ -258,8 +254,8 @@ public class Q1 {
             return 0; //If the list is empty, return 0 indicates there is not list
         }
         Node current = head;
-        int count = 0; //Count = 0 because we want to assume that there is no node intially, then count up to 1, 2,3..
-                       //If we count from 1, we assume there is 1 node already so it's wrong
+        int count = 0; //Count = 0 because we want to assume that there is no node initially, then count up to 1, 2,3..
+                       //If we count from 1, we assume there is 1 node already, so it's wrong
         while (current != null) {
             count++;
             current = current.next;
@@ -364,13 +360,50 @@ public class Q1 {
         
         current.next = current.next.next;
     }
-    
-    public void addBefore() {
-        
+
+    public void addBefore(Node p, int x) {
+
+        Node newNode = new Node(x);
+
+        // Handle the case where p is the head of the list.
+        if (head == p) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+
+        Node current = head;
+        Node previous = null;
+
+        // Traverse the list to find the node before p.
+        while (current != null && current != p) {
+            previous = current;
+            current = current.next;
+        }
+
+        // If p was not found, return or throw an error.
+        if (current == null) {
+            System.err.println("Node p not found in the list.");
+            return;
+        }
+        previous.next = newNode;
+        newNode.next = p;
     }
     
     public int[] toArray() {
-        
+//        Calculate the size of the linked list because if we want to create a regular array in Java
+//        we need to know the size in advance.
+        int size = count();
+        int arr[] = new int[size];
+        Node current = head;
+        int index = 0;
+        // Traverse to the list and collect data to an array.
+        while (current != null) {
+            arr[index] = current.data;
+            current = current.next;
+            index++;
+        }
+        return arr;
     }
     
     /**
@@ -382,14 +415,15 @@ public class Q1 {
         //the list and check if any node bigger than max. If it is, assign that node is the new max and 
         //repeat.
         int max = Integer.MIN_VALUE;
-        while (head != null) {
+        Node current = head;
+        while (current != null) {
             //If max is less than head.data, then assign value of head.data to max
             //Otherwise node point to another node
-            if (head.data > max) {
-                max = head.data;
+            if (current.data > max) {
+                max = current.data;
                
             }
-            head = head.next;
+            current = current.next;
         }
         return max;
     }
@@ -397,15 +431,16 @@ public class Q1 {
     /**
      *  Return the minimum value in the list
      *  Apply the same logic as finding the maximum value in the list.
-     * @return 
+     *
      */
     public int min() {
+        Node current = head;
         int min = Integer.MAX_VALUE;
-        while (head != null) {
-            if (head.data < min) {
-                min = head.data;
+        while (current != null) {
+            if (current.data < min) {
+                min = current.data;
             }
-            head = head.next;
+            current = current.next;
         }
         return min;
     }
@@ -505,7 +540,7 @@ public class Q1 {
             previous = current;
             current = nxt;
         }
-        head = previous; //Previous becoms a new head
+        head = previous; //Previous becomes a new head
     }
     /**
      * Check whether two singly linked list have the same contents
@@ -513,8 +548,6 @@ public class Q1 {
      * If one data of the current node is not equal the other node, return false
      * Return true if both of them are identical.
      * In this method, I will use both iterative and recursive method.
-     * @param
-     * @return 
      */
     public boolean areIdentical(Node head1, Node head2) {
 //        Node firstRunner = head1;
@@ -529,7 +562,7 @@ public class Q1 {
 //                break;
 //            }
 //            //This code mean if we traverse to the end of both linked list, this mean
-//            //these values in this list are indentical.
+//            //these values in this list are identical.
 //            if (firstRunner.next == null && secondRunner.next == null) {
 //                return true;
 //            }
@@ -545,8 +578,112 @@ public class Q1 {
         if (head1.data != head2.data) return false;
         return areIdentical(head1.next , head2.next);
     }
-    
+
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " --> ");
+            current = current.next;
+        }
+        System.out.println(" null");
+        System.out.println();
+    }
+    public Node merge(Node p, Node q) {
+        Node newHead = null;
+        Node sorting = null;
+
+        if (p == null) {
+            return q;
+        }
+        if (q == null) {
+            return p;
+        }
+
+        if (p != null && q != null) {
+            if (p.data <= q.data) {
+                newHead = p;
+                sorting = p;
+                p = p.next;
+            } else {
+                newHead = q;
+                sorting = q;
+                q = q.next;
+            }
+        }
+
+        while (p != null && q != null) {
+            if (p.data <= q.data) {
+                sorting.next = p;
+                sorting = p;
+                p = p.next;
+            } else {
+                sorting.next = q;
+                sorting = q;
+                q = q.next;
+            }
+        }
+
+        if (p == null) {
+            sorting.next = q;
+        }
+
+        if (q == null) {
+            sorting.next = p;
+        }
+
+        return newHead;
+    }
+
+    public void attachLinkedList(Node secondList) {
+        // If the first list is empty, simply set the head to the head of the second list.
+        if (head == null) {
+            head = secondList.head;
+            return;
+        }
+
+        // Find the last node of the first list.
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+
+        // Attach the second list by updating the 'next' of the last node.
+        current.next = secondList.head;
+    }
+
+    public void push(int data) {
+        Node newNode = new Node();
+        newNode.data = data;
+        newNode.next = (head);
+        (head) = newNode;
+    }
+
+
     public static void main(String[] args) {
-        
+        Q1 linkedList = new Q1();
+
+        linkedList.push(15);
+        linkedList.push(20);
+        linkedList.push(80);
+        linkedList.push(34);
+        linkedList.push(90);
+        linkedList.addToTail(50);
+        linkedList.push(10);
+
+        System.out.println("Original List: ");
+        linkedList.display();
+
+        System.out.println("Sum: ");
+        System.out.println(linkedList.sum());
+
+        System.out.println("Average: ");
+        System.out.println(linkedList.average());
+
+        System.out.println("Minimum element in the list");
+        System.out.println(linkedList.min());
+
+        System.out.println("Maximum element in the list: ");
+        System.out.println(linkedList.max());
+
     }
 }
