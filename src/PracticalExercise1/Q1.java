@@ -689,5 +689,6 @@ public class Q1 {
         linkedList.reverse();
         linkedList.display();
 
+
     }
 }
