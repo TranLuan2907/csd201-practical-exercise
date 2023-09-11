@@ -5,7 +5,9 @@
  */
 package PracticalExercise1;
 
-import java.nio.channels.SeekableByteChannel;
+
+
+
 
 /**
  * This is some of my codes contributing to the subject CSD201 practice
@@ -361,5 +363,190 @@ public class Q1 {
         }
         
         current.next = current.next.next;
+    }
+    
+    public void addBefore() {
+        
+    }
+    
+    public int[] toArray() {
+        
+    }
+    
+    /**
+     * Return the maximum value in the list
+     * @return 
+     */
+    public int max() {
+        //The idea here is we assign max value is the smallest value (-32767), after which we traverse 
+        //the list and check if any node bigger than max. If it is, assign that node is the new max and 
+        //repeat.
+        int max = Integer.MIN_VALUE;
+        while (head != null) {
+            //If max is less than head.data, then assign value of head.data to max
+            //Otherwise node point to another node
+            if (head.data > max) {
+                max = head.data;
+               
+            }
+            head = head.next;
+        }
+        return max;
+    }
+    
+    /**
+     *  Return the minimum value in the list
+     *  Apply the same logic as finding the maximum value in the list.
+     * @return 
+     */
+    public int min() {
+        int min = Integer.MAX_VALUE;
+        while (head != null) {
+            if (head.data < min) {
+                min = head.data;
+            }
+            head = head.next;
+        }
+        return min;
+    }
+    
+    /**
+     * Return sum of all values in list
+     * Idea: Call a function by passing the head and variable to store the sum.
+     *       Then recursively call the function by passing the next of current node and sum variable.
+     *       Add the value of the current node to the sum.
+     */
+    public int sum() {
+        Node current = head;
+        int sum = 0;
+        while (current != null) {
+            sum += current.data;
+            current = current.next;
+        }
+        return sum;
+    }
+    
+    public double average() {
+        Node current = head;
+        int sum = 0;
+        int count = 0;
+        double average = 0;
+        
+        // Avoiding division by zero
+        if (head == null) {
+            return 0;
+        }
+        
+        while (current != null) {
+            count++;
+            sum += current.data;
+            current = current.next;
+        }
+        
+        average = (double) sum / count;
+        return average;
+    }
+    
+    /**
+     * Check and return true if the list is sorted, return false if the list is not sorted
+     * First iterate through the list and compare node's value with next node's value
+     * If next node's value smaller than current node's value, return false to indicates the list is not sorted
+     * If reaching the end of the list without finding such instance, return true to indicates that the list is sorted
+     * @return 
+     */
+    public boolean sorted() {
+        // An empty list or a list with 1 node is considered sorted
+        if (head == null || head.next == null) {
+            return true;
+        }
+        
+        Node current = head;
+        while (current.next != null) {
+            //Check if next node's value is smaller than current node's value
+            if (current.data > current.next.data) {
+                return false; // Indicate that the node is not sorted
+            }
+            current = current.next;
+        }
+        return true; //If we reach the end of the list without finding an out-of-order pair, then the list is sorted
+    }
+    
+    /**
+     * Insert node with value x into sorted list so that the new list is sorted.
+     * @param x 
+     */
+    public void insert(int x) {
+        Node newNode = new Node(x);
+        //If the list is empty or node's value is smaller than head node.
+        //Insert new node at the beginning of the list
+        if (head == null || x < head.data) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+        //Traverse the list until we find the correct position to insert the new node
+        Node current = head;
+        while (current.next != null && x > current.next.data) {
+            current = current.next;
+        }
+        newNode.next = current.next;
+        current.next = newNode;
+    }
+    /**
+     * Reverse a singly linked list using iterative method
+     */
+    public void reverse() {
+        Node previous = null;
+        Node current = head;
+        Node nxt = null;
+        while (current != null) {
+            nxt = current.next;
+            current.next = previous;
+            previous = current;
+            current = nxt;
+        }
+        head = previous; //Previous becoms a new head
+    }
+    /**
+     * Check whether two singly linked list have the same contents
+     * Traverse both the linked lists simultaneously
+     * If one data of the current node is not equal the other node, return false
+     * Return true if both of them are identical.
+     * In this method, I will use both iterative and recursive method.
+     * @param b
+     * @return 
+     */
+    public boolean areIdentical(Node head1, Node head2) {
+//        Node firstRunner = head1;
+//        Node secondRunner = head2;
+//        
+//        if (head1 == null && head2 == null) {
+//            return true;
+//        }
+//        
+//        while (head1 != null && head2 != null) {
+//            if (firstRunner.data != secondRunner.data) {
+//                break;
+//            }
+//            //This code mean if we traverse to the end of both linked list, this mean
+//            //these values in this list are indentical.
+//            if (firstRunner.next == null && secondRunner.next == null) {
+//                return true;
+//            }
+//            firstRunner = firstRunner.next;
+//            secondRunner = secondRunner.next;
+//        }
+//        return false;
+//        
+        //Recursion Method
+        if (head1 == null && head2 == null) return true;
+        if (head1 == null && head2 != null) return false;
+        if (head1 != null && head2 == null) return false;
+        if (head1.data != head2.data) return false;
+        return areIdentical(head1.next , head2.next);
+    }
+    
+    public static void main(String[] args) {
+        
     }
 }
