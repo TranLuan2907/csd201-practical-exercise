@@ -513,7 +513,7 @@ public class Q1 {
      * If one data of the current node is not equal the other node, return false
      * Return true if both of them are identical.
      * In this method, I will use both iterative and recursive method.
-     * @param b
+     * @param
      * @return 
      */
     public boolean areIdentical(Node head1, Node head2) {
