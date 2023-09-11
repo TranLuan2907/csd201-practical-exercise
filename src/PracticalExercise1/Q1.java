@@ -685,5 +685,9 @@ public class Q1 {
         System.out.println("Maximum element in the list: ");
         System.out.println(linkedList.max());
 
+        System.out.println("Reverse list: ");
+        linkedList.reverse();
+        linkedList.display();
+
     }
 }
