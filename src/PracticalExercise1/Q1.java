@@ -54,6 +54,14 @@ public class Q1 {
         }
     }
 
+
+    /**
+     * If the list is empty, assign head to null.
+     */
+    public boolean isEmpty() {
+        return head == null;
+    }
+
     /**
      * Inserts a new node with the given value at the beginning of the list.
      *
@@ -688,7 +696,5 @@ public class Q1 {
         System.out.println("Reverse list: ");
         linkedList.reverse();
         linkedList.display();
-
-
     }
 }
