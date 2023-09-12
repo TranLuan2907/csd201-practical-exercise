@@ -49,44 +49,65 @@ public class Q2 {
     }
 
     public void addToHead(String x) {
+        Node node = new Node(x);
+        node.next = head;
+        head = node;
+    }
 
+    public void display() {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ->");
+            current = current.next;
+        }
+        System.out.println(" null");
+        System.out.println();
     }
 
     public void addToTail(String x) {
-
+        Node node = new Node(x);
+        if (isEmpty()) {
+            head = node;
+            return;
+        }
+        Node current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        current.next = node;
     }
 
     public void addAfter(Node p, String x) {
 
     }
-
-    public void traverse() {
-
-    }
-
-    public String deleteFromHead() {
-
-    }
-
-    public String deleteFromTail() {
-
-    }
-
-    public String deleteAfter(Node p) {
-
-    }
-
-    public void delete(String x) {
-
-    }
-
-    public Node search(String x) {
-
-    }
-
-    public String count() {
-
-    }
+//
+//    public void traverse() {
+//
+//    }
+//
+//    public String deleteFromHead() {
+//
+//    }
+//
+//    public String deleteFromTail() {
+//
+//    }
+//
+//    public String deleteAfter(Node p) {
+//
+//    }
+//
+//    public void delete(String x) {
+//
+//    }
+//
+//    public Node search(String x) {
+//
+//    }
+//
+//    public String count() {
+//
+//    }
 
     public boolean isEmpty() {
         return head == null;
@@ -97,6 +118,20 @@ public class Q2 {
      * Used to add values to test the algorithm
      */
     public static void main(String[] args) {
+        Q2 linkedList = new Q2();
 
+        //Check add to head method.
+//
+//        linkedList.addToHead("FPT");
+//        linkedList.addToHead("HCMUT");
+//        linkedList.addToHead("HCMUS");
+//        linkedList.display();
+
+
+        //Check add to tail method.
+//        linkedList.addToTail("FPT");
+//        linkedList.addToTail("HCMUT");
+//        linkedList.addToTail("HCMUS");
+//        linkedList.display();
     }
 }
